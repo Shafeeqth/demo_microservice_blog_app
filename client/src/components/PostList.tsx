@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CommentCreate from "./commentCreate";
-import CommentList from "./CommentList";
+import CommentList, {Comment} from "./CommentList";
 interface Posts {
   [id: string]: {
     id: string;
     title: string;
+    comments: Comment[]
   };
 }
 type Props = {};
@@ -17,7 +18,7 @@ const PostList = (props: Props) => {
     getPosts();
   }, []);
   const getPosts = async () => {
-    const responst = await axios.get("http://localhost:4000/posts");
+    const responst = await axios.get("http://localhost:4002/posts");
     setPosts(responst.data);
   };
   const renderedPosts = Object.values(posts).map((post) => {
@@ -30,7 +31,7 @@ const PostList = (props: Props) => {
       >
         <div className="card-body">
           <h3>{post.title}</h3>
-          <CommentList postId={post.id} />
+          <CommentList comments={post.comments} />
           <CommentCreate postId={post.id} />
         </div>
       </div>
