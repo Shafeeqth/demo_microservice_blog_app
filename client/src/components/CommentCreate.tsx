@@ -13,6 +13,7 @@ const CommentCreate = ({ postId }: Props) => {
 
     await axios.post( `http://localhost:4001/posts/${postId}/comments`, {
       postId,
+      content
     });
 
     setContent("");
