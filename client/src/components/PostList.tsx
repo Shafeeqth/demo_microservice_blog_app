@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentCreate from "./commentCreate";
 import CommentList, {Comment} from "./CommentList";
+import CommentCreate from "./CommentCreate";
 interface Posts {
   [id: string]: {
     id: string;
@@ -12,7 +12,7 @@ interface Posts {
 type Props = {};
 
 const PostList = (props: Props) => {
-  const [posts, setPosts] = useState<{} | Posts>({});
+  const [posts, setPosts] = useState< Posts>({});
 
   useEffect(() => {
     getPosts();
