@@ -1,28 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentList, {Comment} from "./CommentList";
+import CommentList, { Comment } from "./CommentList";
 import CommentCreate from "./CommentCreate";
 interface Posts {
   [id: string]: {
     id: string;
     title: string;
-    comments: Comment[]
+    comments: Comment[];
   };
 }
 type Props = {};
 
 const PostList = (props: Props) => {
-  const [posts, setPosts] = useState< Posts>({});
+  const [posts, setPosts] = useState<Posts>({});
 
   useEffect(() => {
+    async function getPosts() {
+      const responst = await axios.get("http://localhost:4002/posts");
+      setPosts(responst.data);
+    }
     getPosts();
   }, []);
-  const getPosts = async () => {
-    const responst = await axios.get("http://localhost:4002/posts");
-    setPosts(responst.data);
-  };
   const renderedPosts = Object.values(posts).map((post) => {
-   
     return (
       <div
         className="card"
