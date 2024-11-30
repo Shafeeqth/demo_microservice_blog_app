@@ -10,7 +10,7 @@ app.use(express.json());
 
 const handleEvent = (type, data) => {
     if (type === "PostCreated") {
-        console.log('post created ivent bus')
+        console.log('post created Event bus');
         const { id, title } = data;
         posts[id] = {
             id,
@@ -48,11 +48,16 @@ app.post('/events', (req, res) => {
 
 app.listen(4002, async () => {
     console.log("Listening on 4002");
+    try {
+        const res = await axios.get('http://event-bus-srv:4005/events');
+        res.data.forEach(event => {
+            console.log('processing event :', event.type);
+            handleEvent(event.type, event.data);
+        })
 
-    const res = await axios.get('http://event-bus-srv:4005/events');
-    res.data.forEach(event => {
-        console.log('processing event :', event.type);
-        handleEvent(event.type, event.data);
-    })
+    } catch (error) {
+        console.log(error);
+
+    }
 
 })
