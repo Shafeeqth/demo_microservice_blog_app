@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 export interface Comment {
   id: string;
   content: string;
